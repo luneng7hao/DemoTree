@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -34,7 +35,8 @@ public class StarView extends View {
     private int mStarWidth;//星星宽度
     private int mStarHeight;//星星高度
     private boolean isIndicator;//是否是一个指示器（默认false，不可设置实心与空心图标的显示）
-
+    private Context context;
+    private int resourceSolid=0,resourceHollow=0;
     public StarView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -51,9 +53,22 @@ public class StarView extends View {
         starMaxNumber = a.getInt(R.styleable.StarView_star_max, 0) * 2;
         starMinNumber = a.getInt(R.styleable.StarView_star_min, 0) * 2;
         starRating = a.getFloat(R.styleable.StarView_star_rating, 0) * 2;
-
-        mSolidBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(), a.getResourceId(R.styleable.StarView_star_solid, 0)));
-        mHollowBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(), a.getResourceId(R.styleable.StarView_star_hollow, 0)));
+        //判断选中图标的配置是否为空
+        if(0==a.getResourceId(R.styleable.StarView_star_solid, 0)){
+            resourceSolid=R.mipmap.ic_star_yellow_selected;
+        }else{
+            resourceSolid=a.getResourceId(R.styleable.StarView_star_solid, 0);
+        }
+        //判断未选中图标的配置是否为空
+        if(0==a.getResourceId(R.styleable.StarView_star_hollow, 0)){
+            resourceHollow=R.mipmap.ic_star_yellow_normal;
+        }else{
+            resourceHollow=a.getResourceId(R.styleable.StarView_star_hollow, 0);
+        }
+        Log.i("solid",resourceSolid+"");
+        Log.i("hollow",resourceHollow+"");
+        mSolidBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(), resourceSolid));
+        mHollowBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(), resourceHollow));
         isIndicator = a.getBoolean(R.styleable.StarView_star_isIndicator, false);
         a.recycle();
     }
@@ -161,8 +176,10 @@ public class StarView extends View {
         if (!isIndicator) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    float TotalWidth = starMaxNumber *( mStarWidth+mSpaceWidth);
-                    if (event.getX()>(starMinNumber-1)*mStarWidth/2&&event.getX() <= TotalWidth) {
+                    //设置图标可显示的宽度，为图标加上空格的总长度
+                    float TotalWidth = starMaxNumber *( mStarWidth+mSpaceWidth)/2;
+                    //设置最显示小值以上时，可图标渐变
+                    if (event.getX()>((starMinNumber-1)*(mStarWidth+mSpaceWidth)/2)&&event.getX() <= TotalWidth) {
                         float newStarRating = (int) event.getX() / ((mStarWidth+mSpaceWidth)/2 ) +1;
                         setStarRating(newStarRating);
                     }
