@@ -29,5 +29,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation" />
+    <com.clibrary.StarView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:space_width="1dp"
+        app:star_height="25dp"
+        app:star_hollow="@mipmap/ic_star_yellow_normal"
+        app:star_isIndicator="false"
+        app:star_max="5"
+        app:star_rating="2"
+        app:star_solid="@mipmap/ic_star_yellow_selected"
+        app:star_width="25dp"
+        android:layout_marginTop="61dp"
+        android:id="@+id/starBarView"
+        android:layout_centerHorizontal="true" />
 
 </android.support.constraint.ConstraintLayout>
