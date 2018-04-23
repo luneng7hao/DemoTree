@@ -15,6 +15,7 @@
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="@string/title_home"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,23 +26,39 @@
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
         android:background="?android:attr/windowBackground"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation" />
+
     <com.clibrary.StarView
+        android:id="@+id/starBarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="61dp"
+        android:visibility="gone"
         app:space_width="1dp"
         app:star_height="25dp"
         app:star_isIndicator="false"
         app:star_max="5"
-        app:star_rating="2"
         app:star_min="2"
+        app:star_rating="2"
         app:star_solid="@mipmap/ic_launcher"
-        app:star_width="25dp"
-        android:layout_marginTop="61dp"
-        android:id="@+id/starBarView"
-        android:layout_centerHorizontal="true" />
+        app:star_width="25dp" />
+
+    <com.asion.pulltorefresh.RefreshView
+        android:id="@+id/refreshable_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+          ></ListView>
+
+    </com.asion.pulltorefresh.RefreshView>
 
 </android.support.constraint.ConstraintLayout>
