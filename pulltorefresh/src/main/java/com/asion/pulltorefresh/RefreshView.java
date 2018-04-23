@@ -333,7 +333,7 @@ public class RefreshView extends LinearLayout implements View.OnTouchListener {
 //            timeIntoFormat = timePassed / ONE_HOUR;
 //            String value = timeIntoFormat + "小时";
 //            updateAtValue = String.format(getResources().getString(R.string.updated_at), value);
-            updateAtValue=getResources().getString(R.string.updated_at)+simpleDateFormat.format(date);
+            updateAtValue="上次更新："+simpleDateFormat.format(date);
         } else if (timePassed < 2*ONE_DAY) {
             updateAtValue="昨天";
         } else if (timePassed < ONE_MONTH) {
